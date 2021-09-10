@@ -2,6 +2,9 @@ library(shiny)
 library(shinydashboard)
 library(plotly)
 
+# First check whether all packages are installed! 
+source("checkPackages.R")
+
 ui <- dashboardPage(
   dashboardHeader(title = "A dashboard Demo"),
   dashboardSidebar(
@@ -32,7 +35,8 @@ server <- function(input, output, session){
   
   output$plot1 <- renderPlotly({
     p <- ggplot(data.frame(x=simul()), aes(x=x)) +
-      geom_histogram(mapping = aes(y = stat(density))) +
+      geom_histogram(mapping = aes(y = stat(density)),
+                     bins = 20) +
       stat_function(fun=dfun(),
                     geom = "area",
                     fill = alpha("red", 0.2))
